@@ -1,6 +1,5 @@
 package org.example;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +13,13 @@ public class Formatter {
         this.timer = timer;
     }
 
-    public String format(List<String> startArray, List<String> endArray, List<String> abbreviationsArray, List<Racer> racers) throws ParseException {
+    public String format(
+        List<String> startArray,
+        List<String> endArray,
+        List<String> abbreviationsArray,
+        List<Racer> racers
+    ) {
+
         timer.timer(startArray, endArray, abbreviationsArray);
         AbbreviationsDTO dto = timer.timer(startArray, endArray, abbreviationsArray);
 
@@ -22,32 +27,38 @@ public class Formatter {
         List<String> cars = new ArrayList<>(dto.getAbbreviationCarMap().values());
 
         StringBuilder result = new StringBuilder();
-        int maxNameLength = maxLineLength(names) + 5;
-        int maxCarNameLength = maxLineLength(cars) + 5;
-        int maxTimeLength = 9;
-        int maxLength = maxNameLength + maxCarNameLength + maxTimeLength + 6; // 15 string
         int topCount = 1;
-
+        String top = topCount + "";
+        SimpleDateFormat timeFormat = new SimpleDateFormat(FORMAT_TIME);
+        int maxNameLength = maxLineLength(names) + FREE_SPACE;
+        int maxCarNameLength = maxLineLength(cars) + FREE_SPACE;
+        int maxTimeLength = TIME_LENGTH;
+        int maxLength = maxNameLength +
+            maxCarNameLength +
+            maxTimeLength +
+            top.length() +
+            ADD_LINE_SPACE;
 
         for (int i = 0; i < racers.size(); i++) {
-            String top = topCount + "";
+
             String name = dto.getTopRacers().get(i).getName();
             String carName = dto.getTopRacers().get(i).getCar();
             result.append(topCount++)
                 .append(DOT)
-                .append(name)//
-                .append(space(maxNameLength - name.length() - top.length(), EMPTY_SPACE))//
+                .append(name)
+                .append(space(maxNameLength - name.length() - top.length(), EMPTY_SPACE))
                 .append(SPLIT)
                 .append(EMPTY_SPACE)
-                .append(carName)//
-                .append(space(maxCarNameLength - carName.length(), EMPTY_SPACE))//
+                .append(carName)
+                .append(space(maxCarNameLength - carName.length(), EMPTY_SPACE))
                 .append(SPLIT)
                 .append(EMPTY_SPACE)
-                .append(new SimpleDateFormat("mm:ss.S").format(dto.getTopRacers().get(i).date))
+                .append(timeFormat.format(dto.getTopRacers().get(i).date))
                 .append("\n");
-            if (topCount == 16)
+            if (topCount == 16) {
                 result.append(space(maxLength, MINUS))
                     .append("\n");
+            }
         }
         return result.toString();
     }

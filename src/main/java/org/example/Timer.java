@@ -1,6 +1,5 @@
 package org.example;
 
-import java.text.ParseException;
 import java.util.List;
 
 
@@ -11,7 +10,11 @@ public class Timer {
         this.parser = parser;
     }
 
-    public AbbreviationsDTO timer(List<String> startArray, List<String> endArray, List<String> abbreviationsArray) throws ParseException {
+    public AbbreviationsDTO timer(
+        List<String> startArray,
+        List<String> endArray,
+        List<String> abbreviationsArray
+    ) {
         parser.parse(startArray, endArray, abbreviationsArray);
         AbbreviationsDTO dto = parser.parse(startArray, endArray, abbreviationsArray);
 

@@ -9,29 +9,42 @@ import static org.example.Constants.*;
 
 public class ParseFiles {
 
-    AbbreviationsDTO dto = new AbbreviationsDTO();
+    public AbbreviationsDTO parse(
+        List<String> startArray,
+        List<String> endArray,
+        List<String> abbreviationsArray
+    ) {
+        AbbreviationsDTO dto = new AbbreviationsDTO();
 
-    public AbbreviationsDTO parse(List<String> startArray, List<String> endArray, List<String> abbreviationsArray) throws ParseException {
-
-        for (int i = 0; i < abbreviationsArray.size(); i++) { // раскидываем файловые значения по мапам
-            String[] abbArray = abbreviationsArray.get(i).split(DOWN_SPLIT); // 3 части, что заебись разложется по мапам
-            dto.getAbbreviationNameMap().put(abbArray[0],abbArray[1]); // abb, name
-            dto.getAbbreviationCarMap().put(abbArray[0], abbArray[2]); // abb, car
-            dto.getStartMap().put(parseString(startArray, i), parseDate(startArray, i)); // abb, start time
-            dto.getEndMap().put(parseString(endArray, i), parseDate(endArray, i)); // abb, end time
+        for (int i = 0; i < abbreviationsArray.size(); i++) {
+            String[] splitAbbreviationFile = abbreviationsArray.get(i).split(DOWN_SPLIT);
+            dto.getAbbreviationNameMap().put(splitAbbreviationFile[0], splitAbbreviationFile[1]);
+            dto.getAbbreviationCarMap().put(splitAbbreviationFile[0], splitAbbreviationFile[2]);
+            try {
+                dto.getStartMap().put(getAbbreviations(startArray, i), getDate(startArray, i));
+                dto.getEndMap().put(getAbbreviations(endArray, i), getDate(endArray, i));
+            } catch (ParseException e) {
+                System.out.println("ParseException, ParseFiles, Parse, line (24, 25)");
+            }
         }
         return dto;
     }
 
-    public String parseString(List<String> array, int i) {
-        StringBuilder abb = new StringBuilder(array.get(i));
-        abb.delete(3, array.get(i).length());
-        return abb.toString();
+    public String getAbbreviations(List<String> fileArray, int i) {
+        StringBuilder getAbbreviation = new StringBuilder(fileArray.get(i));
+        getAbbreviation.delete(3, fileArray.get(i).length());
+        return getAbbreviation.toString();
     }
-        public Date parseDate(List<String> array, int i) throws ParseException {
-        StringBuilder date = new StringBuilder(array.get(i));
-        date.delete(0, 3);
-        Date time = new SimpleDateFormat("y-MM-d_H:m:s.S").parse(date.toString());
+
+    public Date getDate(List<String> array, int i) throws ParseException {
+        StringBuilder parsedDateFile = new StringBuilder(array.get(i));
+        parsedDateFile.delete(0, 3);
+        try {
+            Date time = new SimpleDateFormat("y-MM-d_H:m:s.S").parse(parsedDateFile.toString());
             return time;
+        } catch (ParseException e) {
+            System.out.println("ParseException, Parse files, parseDate method");
+            throw e;
+        }
     }
 }
