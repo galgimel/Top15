@@ -14,8 +14,7 @@ public class Main {
         ParseFiles parser = new ParseFiles();
         Timer timer = new Timer();
         Formatter formatter = new Formatter(timer);
-        AbbreviationsDTO parsedDTO = parser.parse(startArray, endArray, abbreviationsArray);
-        AbbreviationsDTO dto = timer.timer(parsedDTO);
+        AbbreviationsDTO dto = timer.timer(parser.parse(startArray, endArray, abbreviationsArray));
 
         for (String abbreviation : dto.getAbbreviationNameMap().keySet()) {
             String name = dto.getAbbreviationNameMap().get(abbreviation);

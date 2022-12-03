@@ -20,7 +20,6 @@ public class Formatter {
         List<String> abbreviationsArray,
         List<Racer> racers
     ) {
-
         AbbreviationsDTO dto = timer.timer(parser.parse(startArray, endArray, abbreviationsArray));
 
         List<String> names = new ArrayList<>(dto.getAbbreviationNameMap().values());
