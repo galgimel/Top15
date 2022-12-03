@@ -1,31 +1,17 @@
 package org.example;
 
-import java.util.List;
-
-
 public class Timer {
-    private ParseFiles parser;
 
-    public Timer(ParseFiles parser) {
-        this.parser = parser;
-    }
+    public AbbreviationsDTO timer(AbbreviationsDTO parsedDTO) {
 
-    public AbbreviationsDTO timer(
-        List<String> startArray,
-        List<String> endArray,
-        List<String> abbreviationsArray
-    ) {
-        parser.parse(startArray, endArray, abbreviationsArray);
-        AbbreviationsDTO dto = parser.parse(startArray, endArray, abbreviationsArray);
-
-        for (String key : dto.getEndMap().keySet()) {
-            if (dto.getStartMap().containsKey(key)) {
-                long startMilli = dto.getStartMap().get(key).getTime();
-                long endMilli = dto.getEndMap().get(key).getTime();
+        for (String key : parsedDTO.getEndMap().keySet()) {
+            if (parsedDTO.getStartMap().containsKey(key)) {
+                long startMilli = parsedDTO.getStartMap().get(key).getTime();
+                long endMilli = parsedDTO.getEndMap().get(key).getTime();
                 long resultMilli = endMilli - startMilli;
-                dto.getResultMap().put(key, resultMilli);
+                parsedDTO.getResultMap().put(key, resultMilli);
             }
         }
-        return dto;
+        return parsedDTO;
     }
 }

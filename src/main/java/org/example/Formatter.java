@@ -8,6 +8,7 @@ import static org.example.Constants.*;
 
 public class Formatter {
     private Timer timer;
+    private ParseFiles parser = new ParseFiles();
 
     public Formatter(Timer timer) {
         this.timer = timer;
@@ -20,42 +21,42 @@ public class Formatter {
         List<Racer> racers
     ) {
 
-        timer.timer(startArray, endArray, abbreviationsArray);
-        AbbreviationsDTO dto = timer.timer(startArray, endArray, abbreviationsArray);
+        AbbreviationsDTO dto = timer.timer(parser.parse(startArray, endArray, abbreviationsArray));
 
         List<String> names = new ArrayList<>(dto.getAbbreviationNameMap().values());
         List<String> cars = new ArrayList<>(dto.getAbbreviationCarMap().values());
 
         StringBuilder result = new StringBuilder();
         int topCount = 1;
-        String top = topCount + "";
         SimpleDateFormat timeFormat = new SimpleDateFormat(FORMAT_TIME);
         int maxNameLength = maxLineLength(names) + FREE_SPACE;
         int maxCarNameLength = maxLineLength(cars) + FREE_SPACE;
-        int maxTimeLength = TIME_LENGTH;
-        int maxLength = maxNameLength +
+        int maxLength = TOP_STRING.length() +
+            maxNameLength +
+            SPLIT.length() +
+            EMPTY_SPACE.length() +
             maxCarNameLength +
-            maxTimeLength +
-            top.length() +
-            ADD_LINE_SPACE;
+            SPLIT.length() +
+            EMPTY_SPACE.length() +
+            TIME_LENGTH;
 
         for (int i = 0; i < racers.size(); i++) {
-
-            String name = dto.getTopRacers().get(i).getName();
-            String carName = dto.getTopRacers().get(i).getCar();
+            String topCountString = String.valueOf(topCount);
+            String name = racers.get(i).getName();
+            String carName = racers.get(i).getCar();
             result.append(topCount++)
                 .append(DOT)
                 .append(name)
-                .append(space(maxNameLength - name.length() - top.length(), EMPTY_SPACE))
+                .append(space(maxNameLength - name.length() - topCountString.length(), EMPTY_SPACE_CHAR))
                 .append(SPLIT)
-                .append(EMPTY_SPACE)
+                .append(EMPTY_SPACE_CHAR)
                 .append(carName)
-                .append(space(maxCarNameLength - carName.length(), EMPTY_SPACE))
+                .append(space(maxCarNameLength - carName.length(), EMPTY_SPACE_CHAR))
                 .append(SPLIT)
-                .append(EMPTY_SPACE)
-                .append(timeFormat.format(dto.getTopRacers().get(i).date))
+                .append(EMPTY_SPACE_CHAR)
+                .append(timeFormat.format(racers.get(i).date))
                 .append("\n");
-            if (topCount == 16) {
+            if (topCount == TOP) {
                 result.append(space(maxLength, MINUS))
                     .append("\n");
             }

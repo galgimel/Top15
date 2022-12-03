@@ -20,31 +20,26 @@ public class ParseFiles {
             String[] splitAbbreviationFile = abbreviationsArray.get(i).split(DOWN_SPLIT);
             dto.getAbbreviationNameMap().put(splitAbbreviationFile[0], splitAbbreviationFile[1]);
             dto.getAbbreviationCarMap().put(splitAbbreviationFile[0], splitAbbreviationFile[2]);
-            try {
-                dto.getStartMap().put(getAbbreviations(startArray, i), getDate(startArray, i));
-                dto.getEndMap().put(getAbbreviations(endArray, i), getDate(endArray, i));
-            } catch (ParseException e) {
-                System.out.println("ParseException, ParseFiles, Parse, line (24, 25)");
-            }
+            dto.getStartMap().put(getAbbreviations(startArray, i), getDate(startArray, i));
+            dto.getEndMap().put(getAbbreviations(endArray, i), getDate(endArray, i));
         }
         return dto;
     }
 
-    public String getAbbreviations(List<String> fileArray, int i) {
-        StringBuilder getAbbreviation = new StringBuilder(fileArray.get(i));
-        getAbbreviation.delete(3, fileArray.get(i).length());
+    public String getAbbreviations(List<String> fileArray, int iCount) {
+        StringBuilder getAbbreviation = new StringBuilder(fileArray.get(iCount));
+        getAbbreviation.delete(ABBREVIATION_LENGTH, fileArray.get(iCount).length());
         return getAbbreviation.toString();
     }
 
-    public Date getDate(List<String> array, int i) throws ParseException {
+    public Date getDate(List<String> array, int i) {
         StringBuilder parsedDateFile = new StringBuilder(array.get(i));
-        parsedDateFile.delete(0, 3);
+        parsedDateFile.delete(0, ABBREVIATION_LENGTH);
         try {
-            Date time = new SimpleDateFormat("y-MM-d_H:m:s.S").parse(parsedDateFile.toString());
-            return time;
+            return new SimpleDateFormat("y-MM-d_H:m:s.S").parse(parsedDateFile.toString());
         } catch (ParseException e) {
             System.out.println("ParseException, Parse files, parseDate method");
-            throw e;
+            throw new IllegalStateException(e);
         }
     }
 }
