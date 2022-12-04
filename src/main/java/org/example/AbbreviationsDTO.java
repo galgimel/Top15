@@ -3,17 +3,22 @@ package org.example;
 import java.util.*;
 
 public class AbbreviationsDTO {
+    /** startMap - abb , start time */
+    private Map<String, Date> startMap = new HashMap<>();
+    /**endMap - abb, end time
+     */
+    private Map<String, Date> endMap = new HashMap<>();
     /**
-     * startMap - abb , start time
-     * endMap - abb, end time
      * resultMap - abb, result time in milli for top comparable
+     */
+    private Map<String, Long> resultMap = new HashMap<>();
+    /**
      * abbreviationNameMap - abb, name
+     */
+    private Map<String, String> abbreviationNameMap = new HashMap<>();
+    /**
      * abbreviationCarMap - abb, car name
      */
-    private Map<String, Date> startMap = new HashMap<>();
-    private Map<String, Date> endMap = new HashMap<>();
-    private Map<String, Long> resultMap = new HashMap<>();
-    private Map<String, String> abbreviationNameMap = new HashMap<>();
     private Map<String, String> abbreviationCarMap = new HashMap<>();
 
     private List<Racer> topRacers = new ArrayList<>();

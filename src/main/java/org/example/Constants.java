@@ -6,6 +6,7 @@ public class Constants {
     public static final String DOT = ".";
     public static final String  EMPTY_SPACE = " ";
     public static final String FORMAT_TIME = "mm:ss.S";
+    public static final String FULL_FORMAT_TIME = "y-MM-d_H:m:s.S";
     public static final char EMPTY_SPACE_CHAR = ' ';
     public static final char MINUS = '-';
     public static final int FREE_SPACE = 5;

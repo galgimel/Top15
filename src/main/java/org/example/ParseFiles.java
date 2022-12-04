@@ -36,7 +36,7 @@ public class ParseFiles {
         StringBuilder parsedDateFile = new StringBuilder(array.get(i));
         parsedDateFile.delete(0, ABBREVIATION_LENGTH);
         try {
-            return new SimpleDateFormat("y-MM-d_H:m:s.S").parse(parsedDateFile.toString());
+            return new SimpleDateFormat(FULL_FORMAT_TIME).parse(parsedDateFile.toString());
         } catch (ParseException e) {
             System.out.println("ParseException, Parse files, parseDate method");
             throw new IllegalStateException(e);

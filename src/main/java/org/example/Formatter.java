@@ -39,10 +39,10 @@ public class Formatter {
             EMPTY_SPACE.length() +
             TIME_LENGTH;
 
-        for (int i = 0; i < racers.size(); i++) {
+        for (Racer racer : racers) {
             String topCountString = String.valueOf(topCount);
-            String name = racers.get(i).getName();
-            String carName = racers.get(i).getCar();
+            String name = racer.getName();
+            String carName = racer.getCar();
             result.append(topCount++)
                 .append(DOT)
                 .append(name)
@@ -53,7 +53,7 @@ public class Formatter {
                 .append(space(maxCarNameLength - carName.length(), EMPTY_SPACE_CHAR))
                 .append(SPLIT)
                 .append(EMPTY_SPACE_CHAR)
-                .append(timeFormat.format(racers.get(i).date))
+                .append(timeFormat.format(racer.date))
                 .append("\n");
             if (topCount == TOP) {
                 result.append(space(maxLength, MINUS))

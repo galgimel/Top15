@@ -7,9 +7,9 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        List<String> startArray = Files.readAllLines(Path.of("C:\\Users\\ASUS\\OneDrive\\Рабочий стол\\java_projects\\Top15\\src\\main\\resources\\Start"));
-        List<String> endArray = Files.readAllLines(Path.of("C:\\Users\\ASUS\\OneDrive\\Рабочий стол\\java_projects\\Top15\\src\\main\\resources\\End"));
-        List<String> abbreviationsArray = Files.readAllLines(Path.of("C:\\Users\\ASUS\\OneDrive\\Рабочий стол\\java_projects\\Top15\\src\\main\\resources\\Abbreviations"));
+        List<String> startArray = Files.readAllLines(Path.of("src\\main\\resources\\Start"));
+        List<String> endArray = Files.readAllLines(Path.of("src\\main\\resources\\End"));
+        List<String> abbreviationsArray = Files.readAllLines(Path.of("src\\main\\resources\\Abbreviations"));
 
         ParseFiles parser = new ParseFiles();
         Timer timer = new Timer();
